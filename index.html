@@ -12,6 +12,10 @@
     .site-head p{margin:6px 0 0;color:#5a6478;font-size:13.5px;line-height:1.6}
     main{max-width:1100px;margin:0 auto;padding:8px 20px 60px}
     .card-body iframe{width:100%;height:560px;border:1px solid var(--line,#e3e7ee);border-radius:8px}
+    #verdict{margin:6px 0 14px;padding:13px 16px;border-radius:10px;font-size:14.5px;line-height:1.55}
+    #verdict.warn{background:#fff4f4;border:1px solid #f3c2c2;color:#9b1c1c}
+    #verdict.ok{background:#eef8f0;border:1px solid #bfe2c8;color:#1f7a35}
+    #verdict b{font-weight:800}
   </style>
 </head>
 <body>
@@ -22,6 +26,7 @@
        <br>※ 미리 생성된 리포트(읽기 전용)이며, 원본 도면 데이터는 포함되어 있지 않습니다.</p>
   </header>
   <main>
+    <div id="verdict"></div>
     <div class="report-head" style="display:flex;align-items:center;gap:14px;margin:10px 0 4px">
       <h2 style="margin:0">리포트</h2><div id="stats"></div>
     </div>
@@ -41,6 +46,15 @@
     // 정적 버전: report.json 을 그대로 읽어 카드 렌더 (서버 불필요).
     // 경로는 상대경로(output/...) — Flask 의 /projects/<pid>/file/ 대신.
     const rel = p => (p || "").replace(/\\/g, "/");
+
+    function renderBanner(cards) {
+      const warn = cards.filter(c => c.status === "warn" || c.status === "error");
+      const el = document.getElementById("verdict");
+      if (!warn.length) { el.className = "ok"; el.innerHTML = "✅ 검토 필요 항목 없음 — 모든 비교 정합"; return; }
+      const names = [...new Set(warn.map(c => c.title.replace(/\s*\(.*$/, "")))];
+      el.className = "warn";
+      el.innerHTML = `⚠️ <b>검토 필요 ${warn.length}건</b> — ${names.join(" · ")}`;
+    }
 
     function renderStats(cards) {
       const stats = document.getElementById("stats");
@@ -65,6 +79,7 @@
       const PRIO = { error: 0, warn: 1, info: 2, ok: 3 };
       cards = cards.slice().sort((a, b) => (PRIO[a.status] ?? 9) - (PRIO[b.status] ?? 9));
       renderStats(cards);
+      renderBanner(cards);
       wrap.innerHTML = "";
       const tpl = document.getElementById("card-tpl");
       cards.forEach((c, i) => {
