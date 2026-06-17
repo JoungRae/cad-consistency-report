@@ -70,9 +70,8 @@
     function renderToc(cards) {
       const nav = document.getElementById("toc");
       nav.innerHTML = cards.map((c, i) => {
-        const name = c.title.replace(/\s*\(.*$/, "");
         const warn = c.status === "warn" || c.status === "error";
-        return `<a href="#card-${i}" class="${warn ? "warn" : ""}">${name}${warn ? " ⚠️" : ""}</a>`;
+        return `<a href="#card-${i}" class="${warn ? "warn" : ""}">${c.title}${warn ? " ⚠️" : ""}</a>`;
       }).join("");
     }
 
