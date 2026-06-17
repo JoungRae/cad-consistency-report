@@ -12,6 +12,8 @@
     .site-head p{margin:6px 0 0;color:#5a6478;font-size:13.5px;line-height:1.6}
     main{max-width:1100px;margin:0 auto;padding:8px 20px 60px}
     .card-body iframe{width:100%;height:560px;border:1px solid var(--line,#e3e7ee);border-radius:8px}
+    .view-d summary{cursor:pointer;font-weight:600;color:#3a4456;padding:8px 0;font-size:13.5px}
+    .view-d iframe{width:100%;height:560px;border:1px solid var(--line,#e3e7ee);border-radius:8px;margin-top:6px}
     #verdict{margin:6px 0 14px;padding:13px 16px;border-radius:10px;font-size:14.5px;line-height:1.55}
     #verdict.warn{background:#fff4f4;border:1px solid #f3c2c2;color:#9b1c1c}
     #verdict.ok{background:#eef8f0;border:1px solid #bfe2c8;color:#1f7a35}
@@ -120,7 +122,15 @@
           img.className = "zoomable"; body.appendChild(img);
         });
         (c.iframes || []).forEach(f => {
-          const fr = document.createElement("iframe"); fr.src = rel(f); fr.loading = "lazy"; body.appendChild(fr);
+          const det = document.createElement("details"); det.className = "view-d";
+          det.innerHTML = "<summary>📐 도면 좌표 뷰 열기</summary>";
+          const fr = document.createElement("iframe"); fr.dataset.src = rel(f);
+          det.appendChild(fr);
+          det.addEventListener("toggle", () => {
+            if (det.open && !fr.src) fr.src = fr.dataset.src;        // 열 때만 로드(8MB 뷰 지연)
+            det.querySelector("summary").textContent = det.open ? "📐 도면 좌표 뷰 닫기" : "📐 도면 좌표 뷰 열기";
+          });
+          body.appendChild(det);
         });
         (c.tables || []).forEach(t => body.appendChild(tableEl(t)));
         if ((c.subreports || []).length) {
