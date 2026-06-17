@@ -62,12 +62,15 @@
     function renderCards(cards) {
       const wrap = document.getElementById("cards");
       if (!cards || !cards.length) { wrap.innerHTML = '<p class="muted">생성된 카드가 없습니다.</p>'; return; }
+      const PRIO = { error: 0, warn: 1, info: 2, ok: 3 };
+      cards = cards.slice().sort((a, b) => (PRIO[a.status] ?? 9) - (PRIO[b.status] ?? 9));
       renderStats(cards);
       wrap.innerHTML = "";
       const tpl = document.getElementById("card-tpl");
-      for (const c of cards) {
+      cards.forEach((c, i) => {
         const node = tpl.content.cloneNode(true);
         node.querySelector(".card").classList.add(c.status || "ok");
+        node.querySelector(".card").id = "card-" + i;
         node.querySelector("h3").textContent = c.title;
         node.querySelector(".summary").textContent = c.summary || "";
         const bb = node.querySelector(".badges");
@@ -124,7 +127,7 @@
         }
         node.querySelector(".log-d").remove();   // 정적 뷰: 실행 로그 생략
         wrap.appendChild(node);
-      }
+      });
     }
 
     fetch("report.json").then(r => r.json())
