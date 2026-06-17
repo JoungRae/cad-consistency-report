@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>도면 정합성 리포트 (데모)</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body{background:#f4f6fb}
+    .site-head{max-width:1100px;margin:0 auto;padding:26px 20px 8px}
+    .site-head h1{margin:0;font-size:22px;color:#1f2a3d}
+    .site-head p{margin:6px 0 0;color:#5a6478;font-size:13.5px;line-height:1.6}
+    main{max-width:1100px;margin:0 auto;padding:8px 20px 60px}
+    .card-body iframe{width:100%;height:560px;border:1px solid var(--line,#e3e7ee);border-radius:8px}
+  </style>
+</head>
+<body>
+  <header class="site-head">
+    <h1>🏢 도면 정합성 비교 리포트 <span style="color:#5b5bf0">(데모)</span></h1>
+    <p>CAD 도면(JSON) 좌표를 분류·대조해 <b>구조↔건축 · 단면↔평면 · 층간 연속성 · 평면↔입면 · 치수 자기검증</b>을
+       자동 검토한 결과입니다. 각 카드는 요약 배지 + 좌표 인터랙티브 뷰(휠 확대·드래그 이동) + 상세표로 구성됩니다.
+       <br>※ 미리 생성된 리포트(읽기 전용)이며, 원본 도면 데이터는 포함되어 있지 않습니다.</p>
+  </header>
+  <main>
+    <div class="report-head" style="display:flex;align-items:center;gap:14px;margin:10px 0 4px">
+      <h2 style="margin:0">리포트</h2><div id="stats"></div>
+    </div>
+    <div id="cards"><p class="muted">불러오는 중…</p></div>
+  </main>
+
+  <template id="card-tpl">
+    <article class="card">
+      <div class="card-head"><span class="dot"></span><h3></h3><span class="summary muted"></span></div>
+      <div class="badges"></div>
+      <div class="card-body"></div>
+      <details class="log-d"><summary>실행 로그</summary><pre class="log"></pre></details>
+    </article>
+  </template>
+
+  <script>
+    // 정적 버전: report.json 을 그대로 읽어 카드 렌더 (서버 불필요).
+    // 경로는 상대경로(output/...) — Flask 의 /projects/<pid>/file/ 대신.
+    const rel = p => (p || "").replace(/\\/g, "/");
+
+    function renderStats(cards) {
+      const stats = document.getElementById("stats");
+      const order = [["ok", "정합"], ["warn", "주의"], ["info", "정보"], ["error", "오류"]];
+      const cnt = {}; cards.forEach(c => cnt[c.status] = (cnt[c.status] || 0) + 1);
+      stats.innerHTML = order.filter(([k]) => cnt[k]).map(([k, ko]) =>
+        `<span class="stat ${k}"><span class="n">${cnt[k]}</span> ${ko}</span>`).join("");
+    }
+
+    function tableEl(t) {
+      const frag = document.createDocumentFragment();
+      const h = document.createElement("div"); h.className = "t-title"; h.textContent = t.title; frag.appendChild(h);
+      const tb = document.createElement("table"); tb.className = "dtable";
+      tb.innerHTML = "<thead><tr>" + t.columns.map(x => `<th>${x}</th>`).join("") + "</tr></thead>"
+        + "<tbody>" + t.rows.map(r => "<tr>" + r.map(v => `<td>${v}</td>`).join("") + "</tr>").join("") + "</tbody>";
+      frag.appendChild(tb); return frag;
+    }
+
+    function renderCards(cards) {
+      const wrap = document.getElementById("cards");
+      if (!cards || !cards.length) { wrap.innerHTML = '<p class="muted">생성된 카드가 없습니다.</p>'; return; }
+      renderStats(cards);
+      wrap.innerHTML = "";
+      const tpl = document.getElementById("card-tpl");
+      for (const c of cards) {
+        const node = tpl.content.cloneNode(true);
+        node.querySelector(".card").classList.add(c.status || "ok");
+        node.querySelector("h3").textContent = c.title;
+        node.querySelector(".summary").textContent = c.summary || "";
+        const bb = node.querySelector(".badges");
+        (c.badges || []).forEach(b => {
+          const s = document.createElement("span");
+          s.className = "badge " + (b.kind || "info"); s.textContent = b.label; bb.appendChild(s);
+        });
+        const body = node.querySelector(".card-body");
+        if (c.explain) {
+          const ex = document.createElement("div"); ex.className = "explain";
+          ex.innerHTML = '<b>💬 무엇이 문제일까?</b> ' + c.explain.replace(/</g, "&lt;");
+          body.appendChild(ex);
+        }
+        (c.images || []).forEach(im => {
+          const img = document.createElement("img"); img.src = rel(im); img.loading = "lazy";
+          img.className = "zoomable"; body.appendChild(img);
+        });
+        (c.iframes || []).forEach(f => {
+          const fr = document.createElement("iframe"); fr.src = rel(f); fr.loading = "lazy"; body.appendChild(fr);
+        });
+        (c.tables || []).forEach(t => body.appendChild(tableEl(t)));
+        if ((c.subreports || []).length) {
+          const list = document.createElement("div"); list.className = "dim-list";
+          c.subreports.forEach(s => {
+            const row = document.createElement("div"); row.className = "dim-row";
+            const warn = s.n_mismatch > 0;
+            row.innerHTML = `<span class="dim-name">${s.label}</span>`
+              + `<span class="dim-stat ${warn ? "warn" : "ok"}">불일치 ${s.n_mismatch}</span>`;
+            let detail = null;
+            if (s.table || s.iframe) {
+              const btn = document.createElement("button");
+              btn.type = "button"; btn.className = "detail-btn"; btn.textContent = "내용보기";
+              detail = document.createElement("div"); detail.className = "dim-detail"; detail.hidden = true;
+              if (s.table) detail.appendChild(tableEl(s.table));
+              if (s.iframe) { const fr = document.createElement("iframe"); fr.loading = "lazy"; fr.dataset.src = rel(s.iframe); detail.appendChild(fr); }
+              btn.onclick = () => {
+                detail.hidden = !detail.hidden; btn.textContent = detail.hidden ? "내용보기" : "닫기";
+                const fr = detail.querySelector("iframe[data-src]");
+                if (fr && !fr.src) fr.src = fr.dataset.src;   // 펼칠 때 로드(무거운 뷰 지연)
+              };
+              row.appendChild(btn);
+            }
+            list.appendChild(row);
+            if (detail) list.appendChild(detail);
+          });
+          body.appendChild(list);
+        }
+        node.querySelector(".log-d").remove();   // 정적 뷰: 실행 로그 생략
+        wrap.appendChild(node);
+      }
+    }
+
+    fetch("report.json").then(r => r.json())
+      .then(d => renderCards(d.cards || []))
+      .catch(e => { document.getElementById("cards").innerHTML =
+        '<p class="muted">report.json 을 불러오지 못했습니다: ' + e + '</p>'; });
+  </script>
+</body>
+</html>
