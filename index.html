@@ -115,6 +115,13 @@
           });
           body.appendChild(list);
         }
+        const srcs = (c.sources || []).filter(s => s.href);   // 정적: href 소스만(레이어 보기)
+        if (srcs.length) {
+          const d = document.createElement("div"); d.className = "src-row";
+          d.innerHTML = '<span class="src-label">레이어 보기</span>' + srcs.map(s =>
+            `<a class="srcbtn" href="${s.href}" target="_blank">🔍 ${s.label}</a>`).join("");
+          body.appendChild(d);
+        }
         node.querySelector(".log-d").remove();   // 정적 뷰: 실행 로그 생략
         wrap.appendChild(node);
       }
