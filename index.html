@@ -23,6 +23,9 @@
       border:1px solid #e3e7ee;color:#3a4456;background:#fff}
     #toc a.warn{border-color:#f0b8b8;color:#b32525;background:#fff6f6}
     #toc a:hover{border-color:#5b5bf0;color:#5b5bf0}
+    td.d-big{color:#c62828;font-weight:700}
+    td.d-mid{color:#b07000}
+    .t-note{font-size:11.5px;color:#7a8394;margin:5px 0 2px}
   </style>
 </head>
 <body>
@@ -84,10 +87,25 @@
     function tableEl(t) {
       const frag = document.createDocumentFragment();
       const h = document.createElement("div"); h.className = "t-title"; h.textContent = t.title; frag.appendChild(h);
+      const dcol = t.columns.findIndex(c => /차이|Δ/.test(c));   // 차이 열 자동 감지
       const tb = document.createElement("table"); tb.className = "dtable";
-      tb.innerHTML = "<thead><tr>" + t.columns.map(x => `<th>${x}</th>`).join("") + "</tr></thead>"
-        + "<tbody>" + t.rows.map(r => "<tr>" + r.map(v => `<td>${v}</td>`).join("") + "</tr>").join("") + "</tbody>";
-      frag.appendChild(tb); return frag;
+      const head = "<thead><tr>" + t.columns.map(x => `<th>${x}</th>`).join("") + "</tr></thead>";
+      const bodyRows = t.rows.map(r => "<tr>" + r.map((v, ci) => {
+        let cls = "";
+        if (ci === dcol) {
+          const n = Math.abs(parseFloat(String(v).replace(/[+,\s]/g, "")) || 0);
+          cls = n > 500 ? ' class="d-big"' : n > 0 ? ' class="d-mid"' : "";
+        }
+        return `<td${cls}>${v}</td>`;
+      }).join("") + "</tr>").join("");
+      tb.innerHTML = head + "<tbody>" + bodyRows + "</tbody>";
+      frag.appendChild(tb);
+      if (dcol >= 0) {
+        const note = document.createElement("div"); note.className = "t-note";
+        note.textContent = "※ |차이| 500mm 초과 = 빨강(검토 권장) · 그 외 = 주황/회색. 균일한 차이는 측정 기준차(관행)일 수 있음.";
+        frag.appendChild(note);
+      }
+      return frag;
     }
 
     function renderCards(cards) {
