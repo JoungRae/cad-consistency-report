@@ -12,6 +12,11 @@
     .site-head p{margin:6px 0 0;color:#5a6478;font-size:13.5px;line-height:1.6}
     main{max-width:1100px;margin:0 auto;padding:8px 20px 60px}
     .card-body iframe{width:100%;height:560px;border:1px solid var(--line,#e3e7ee);border-radius:8px}
+    .group-head{font-size:16px;font-weight:800;color:#1f2a3d;margin:28px 0 12px;padding-bottom:7px;
+      border-bottom:2px solid #e3e7ee;display:flex;align-items:baseline;gap:10px;scroll-margin-top:10px}
+    .group-head.warn{border-bottom-color:#f0b8b8}
+    .group-count{font-size:12.5px;font-weight:600;color:#7a8394}
+    .group-head.warn .group-count{color:#c62828}
     .view-d summary{cursor:pointer;font-weight:600;color:#3a4456;padding:8px 0;font-size:13.5px}
     .view-d iframe{width:100%;height:560px;border:1px solid var(--line,#e3e7ee);border-radius:8px;margin-top:6px}
     #verdict{margin:6px 0 14px;padding:13px 16px;border-radius:10px;font-size:14.5px;line-height:1.55}
@@ -67,11 +72,20 @@
       el.innerHTML = `⚠️ <b>검토 필요 ${warn.length}건</b> — ${names.join(" · ")}`;
     }
 
-    function renderToc(cards) {
+    // 정합성 카테고리 표시 순서·이름 (card.id 기준)
+    const CATS = [
+      ["section_plan", "단면↔평면"],
+      ["struct_arch", "구조↔건축"],
+      ["floors", "층간 연속성"],
+      ["plan_elev", "평면↔입면"],
+      ["dim_check", "치수 자기검증"],
+    ];
+
+    function renderNav(ordered) {   // 카테고리별 점프 칩
       const nav = document.getElementById("toc");
-      nav.innerHTML = cards.map((c, i) => {
-        const warn = c.status === "warn" || c.status === "error";
-        return `<a href="#card-${i}" class="${warn ? "warn" : ""}">${c.title}${warn ? " ⚠️" : ""}</a>`;
+      nav.innerHTML = ordered.map(([id, name, list]) => {
+        const warnN = list.filter(c => c.status === "warn" || c.status === "error").length;
+        return `<a href="#grp-${id}" class="${warnN ? "warn" : ""}">${name}${warnN ? " ⚠️" + warnN : ""}</a>`;
       }).join("");
     }
 
@@ -107,20 +121,11 @@
       return frag;
     }
 
-    function renderCards(cards) {
-      const wrap = document.getElementById("cards");
-      if (!cards || !cards.length) { wrap.innerHTML = '<p class="muted">생성된 카드가 없습니다.</p>'; return; }
-      const PRIO = { error: 0, warn: 1, info: 2, ok: 3 };
-      cards = cards.slice().sort((a, b) => (PRIO[a.status] ?? 9) - (PRIO[b.status] ?? 9));
-      renderStats(cards);
-      renderBanner(cards);
-      renderToc(cards);
-      wrap.innerHTML = "";
+    function buildCard(c) {
       const tpl = document.getElementById("card-tpl");
-      cards.forEach((c, i) => {
+      {
         const node = tpl.content.cloneNode(true);
         node.querySelector(".card").classList.add(c.status || "ok");
-        node.querySelector(".card").id = "card-" + i;
         node.querySelector("h3").textContent = c.title;
         node.querySelector(".summary").textContent = c.summary || "";
         const bb = node.querySelector(".badges");
@@ -184,7 +189,31 @@
           body.appendChild(d);
         }
         node.querySelector(".log-d").remove();   // 정적 뷰: 실행 로그 생략
-        wrap.appendChild(node);
+        return node;
+      }
+    }
+
+    function renderCards(cards) {
+      const wrap = document.getElementById("cards");
+      if (!cards || !cards.length) { wrap.innerHTML = '<p class="muted">생성된 카드가 없습니다.</p>'; return; }
+      renderStats(cards);
+      renderBanner(cards);
+      // 카테고리(card.id)별로 묶기 — report 순서 보존, 정렬 안 함
+      const groups = new Map();
+      cards.forEach(c => { const k = c.id || "기타"; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(c); });
+      const ordered = [];
+      CATS.forEach(([id, name]) => { if (groups.has(id)) { ordered.push([id, name, groups.get(id)]); groups.delete(id); } });
+      groups.forEach((list, id) => ordered.push([id, id, list]));   // 미등록 카테고리는 뒤에
+      renderNav(ordered);
+      wrap.innerHTML = "";
+      ordered.forEach(([id, name, list]) => {
+        const warnN = list.filter(c => c.status === "warn" || c.status === "error").length;
+        const head = document.createElement("h2");
+        head.className = "group-head" + (warnN ? " warn" : "");
+        head.id = "grp-" + id;
+        head.innerHTML = `${name} <span class="group-count">${list.length}개 · ${warnN ? "⚠️ " + warnN + "건 검토" : "모두 정합"}</span>`;
+        wrap.appendChild(head);
+        list.forEach(c => wrap.appendChild(buildCard(c)));
       });
     }
 
