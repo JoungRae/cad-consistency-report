@@ -64,10 +64,6 @@
    "log": "",
    "sources": [
     {
-     "label": "단면 단면도",
-     "json": "drawings\\단면도\\단면도.json"
-    },
-    {
      "label": "평면 기준층",
      "json": "drawings\\평면도_건축\\기준층.json"
     }
@@ -151,10 +147,6 @@
    ],
    "log": "",
    "sources": [
-    {
-     "label": "단면 단면도",
-     "json": "drawings\\단면도\\단면도.json"
-    },
     {
      "label": "평면 1층",
      "json": "drawings\\평면도_건축\\1층.json"
@@ -536,7 +528,7 @@
        ]
       ]
      },
-     "iframe": "output\\건축_단면도_단면도_dimcheck_view.html"
+     "iframe": null
     },
     {
      "label": "건축 입면도 배면",
