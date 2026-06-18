@@ -28,31 +28,52 @@
      "rows": [
       [
        "15층",
+       "침실2",
+       1800,
+       2888,
+       "-1088"
+      ],
+      [
+       "15층",
+       "현관",
+       3070,
+       1537,
+       "+1533"
+      ],
+      [
+       "15층",
        "ELEV.홀",
        2325,
        2025,
        "+300"
       ],
       [
-       "15층",
-       "침실2·현관 (묶음)",
-       6370,
-       5750,
-       "+620"
+       "14층",
+       "침실2",
+       1800,
+       2888,
+       "-1088"
       ],
       [
        "14층",
-       "침실2·현관·ELEV.홀 (묶음)",
-       8695,
-       8135,
-       "+560"
+       "현관",
+       2990,
+       1537,
+       "+1453"
+      ],
+      [
+       "14층",
+       "ELEV.홀",
+       2405,
+       2025,
+       "+380"
       ],
       [
        "8층",
        "거실·주방/식당 (묶음)",
-       8455,
+       5695,
        7335,
-       "+1120"
+       "-1640"
       ]
      ]
     }
@@ -67,12 +88,12 @@
   },
   {
    "id": "section_plan",
-   "title": "단면↔평면 (단면 2층, 1층 → 평면 1층)",
+   "title": "단면↔평면 (단면 1층 → 평면 1층)",
    "status": "ok",
-   "summary": "단면 2층, 1층 ↔ 평면 1층 · 절단선 8/8 정합",
+   "summary": "단면 1층 ↔ 평면 1층 · 절단선 4/4 정합",
    "badges": [
     {
-     "label": "절단선 정합 8/8",
+     "label": "절단선 정합 4/4",
      "kind": "ok"
     }
    ],
@@ -92,32 +113,11 @@
      ],
      "rows": [
       [
-       "2층",
-       "침실1",
-       3818,
-       3388,
-       "+430"
-      ],
-      [
-       "2층",
-       "욕실2",
-       2358,
-       1337,
-       "+1021"
-      ],
-      [
-       "2층",
-       "발코니",
-       2230,
-       1817,
-       "+413"
-      ],
-      [
        "1층",
        "침실1",
-       3818,
+       2317,
        3388,
-       "+430"
+       "-1071"
       ],
       [
        "1층",
@@ -146,17 +146,53 @@
   },
   {
    "id": "struct_arch",
-   "title": "구조↔건축 (기준층)",
+   "title": "구조↔건축 (1층)",
    "status": "warn",
-   "summary": "이슈 143개 · 정렬일치율 0.94",
+   "summary": "이슈 119개 · 정렬일치율 1.0",
    "badges": [
     {
-     "label": "정렬일치율 0.94",
+     "label": "정렬일치율 1.0",
      "kind": "info"
     },
     {
-     "label": "이슈 143",
+     "label": "이슈 119",
      "kind": "warn"
+    }
+   ],
+   "images": [],
+   "iframes": [
+    "output\\compare_구조_평면도_1층__건축_평면도_1층.html"
+   ],
+   "tables": [],
+   "raw": [
+    "output\\compare_구조_평면도_1층__건축_평면도_1층.json"
+   ],
+   "log": "$ python compare_drawings.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\구조_평면도_1층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\건축_평면도_1층.json\"\n구조측: 구조_평면도_1층 (dwg_type=struct)\n건축측: 건축_평면도_1층 (dwg_type=arch)\n정렬 검증: 구조벽 1mm 정확일치율 100.0% (334개)\n\n[wall_struct] 구조측 총 390.1m (벽객체 103개 + 외톨이면 196개)\n  일치 100.0% · 이동 0 · 두께변경 0 · 누락 0 · 추가 0 · 면이동 0\n\n[column_struct] 건축측 기둥 레이어 빈약(44.9m) -> 건축 구조형상 전체(기둥+벽)에 대한 포함 검사로 전환\n  구조측 기둥 387.3m · 건축 구조형상에 표현됨 148.1m (38.2%) · 누락조각 146 · 이동 66\n\n[window_opening] 구조측 60개 · 건축측 60개 · 일치 60 · 이동 0 · 폭변경 0 · 누락 0 · 추가 0\n\n총 이슈: 119건\n  [column_missing_in_arch] column_struct 27.60m @ [98607, 911560, 108937, 919805]\n  [shifted] column_struct 16.55m @ [108462, 911795, 112942, 917930] Δ9.2mm\n  [shifted] column_struct 16.49m @ [122732, 912100, 123662, 920005] Δ25.0mm\n  [column_missing_in_arch] column_struct 9.74m @ [146702, 912050, 147987, 920055]\n  [shifted] column_struct 8.99m @ [135722, 911795, 137932, 917930] Δ15.0mm\n  [shifted] column_struct 7.99m @ [133452, 911810, 135472, 917780] Δ7.5mm\n  [shifted] column_struct 7.96m @ [114262, 917780, 117002, 923105] Δ38.0mm\n  [column_missing_in_arch] column_struct 7.96m @ [132987, 923105, 140947, 923105]\n  [column_missing_in_arch] column_struct 7.27m @ [108877, 923105, 116147, 923105]\n  [column_missing_in_arch] column_struct 6.69m @ [105697, 919805, 108187, 922705]\n\n출력: output\\compare_구조_평면도_1층__건축_평면도_1층.json\n출력: output\\compare_구조_평면도_1층__건축_평면도_1층.html",
+   "sources": [
+    {
+     "label": "구조 1층 레이어",
+     "href": "output/구조_평면도_1층_layer.html"
+    },
+    {
+     "label": "건축 1층 레이어",
+     "href": "output/건축_평면도_1층_layer.html"
+    }
+   ],
+   "explain": "1층 구조↔건축 비교에서 정렬일치율 1.0임에도 불구하고 이슈 119건이 검출되어, 좌표/축선 문제는 아니나 요소의 형상·치수·속성 불일치가 다수 존재할 가능성이 있습니다. 벽·기둥 경계, 개구부 위치·크기, 슬래브/외곽 라인에서의 관행차·설계변경 미반영 여부를 우선 확인하고, 구조·건축 간 층할당/분류 매핑 차이도 함께 점검해 주세요."
+  },
+  {
+   "id": "struct_arch",
+   "title": "구조↔건축 (기준층)",
+   "status": "ok",
+   "summary": "이슈 0개 · 정렬일치율 1.0",
+   "badges": [
+    {
+     "label": "정렬일치율 1.0",
+     "kind": "info"
+    },
+    {
+     "label": "이슈 0",
+     "kind": "ok"
     }
    ],
    "images": [],
@@ -167,7 +203,7 @@
    "raw": [
     "output\\compare_구조_평면도_기준층__건축_평면도_기준층.json"
    ],
-   "log": "$ python compare_drawings.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test\\output\\staged\\구조_평면도_기준층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test\\output\\staged\\건축_평면도_기준층.json\"\n구조측: 구조_평면도_기준층 (dwg_type=struct)\n건축측: 건축_평면도_기준층 (dwg_type=arch)\n평행이동 정렬: 구조를 (+84000, +0)mm 이동 → 건축 좌표계로 맞춤\n정렬 검증: 구조벽 1mm 정확일치율 94.0% (282개)\n\n[wall_struct] 구조측 총 390.1m (벽객체 103개 + 외톨이면 196개)\n  일치 89.4% · 이동 0 · 두께변경 0 · 누락 42 · 추가 12 · 면이동 0\n\n[column_struct] 건축측 기둥 레이어 빈약(0.0m) -> 건축 구조형상 전체(기둥+벽)에 대한 포함 검사로 전환\n  구조측 기둥 387.3m · 건축 구조형상에 표현됨 150.1m (38.7%) · 누락조각 145 · 이동 65\n\n[window_opening] 구조측 60개 · 건축측 64개 · 일치 60 · 이동 0 · 폭변경 0 · 누락 0 · 추가 4\n\n총 이슈: 143건\n  [column_missing_in_arch] column_struct 27.60m @ [182607, 911560, 192937, 919805]\n  [shifted] column_struct 16.55m @ [192462, 911795, 196942, 917930] Δ9.2mm\n  [shifted] column_struct 16.49m @ [206732, 912100, 207662, 920005] Δ25.0mm\n  [shifted] column_struct 15.23m @ [192877, 917780, 201002, 923105] Δ23.3mm\n  [shifted] column_struct 10.81m @ [216987, 920255, 224947, 923105] Δ-50.0mm\n  [column_missing_in_arch] column_struct 9.74m @ [230702, 912050, 231987, 920055]\n  [column_missing_in_arch] column_struct 9.14m @ [189697, 919805, 192187, 922705]\n  [shifted] column_struct 8.99m @ [219722, 911795, 221932, 917930] Δ15.0mm\n  [shifted] column_struct 7.99m @ [217452, 911810, 219472, 917780] Δ7.5mm\n  [missing_in_arch] wall_struct 5.00m @ [224697, 922855, 225397, 926255]\n\n출력: output\\compare_구조_평면도_기준층__건축_평면도_기준층.json\n출력: output\\compare_구조_평면도_기준층__건축_평면도_기준층.html",
+   "log": "$ python compare_drawings.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\구조_평면도_기준층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\건축_평면도_기준층.json\"\n구조측: 구조_평면도_기준층 (dwg_type=struct)\n건축측: 건축_평면도_기준층 (dwg_type=arch)\n평행이동 정렬: 구조를 (-84000, +0)mm 이동 → 건축 좌표계로 맞춤\n정렬 검증: 구조벽 1mm 정확일치율 100.0% (300개)\n\n[wall_struct] 구조측 총 359.6m (벽객체 89개 + 외톨이면 176개)\n  일치 100.0% · 이동 0 · 두께변경 0 · 누락 0 · 추가 0 · 면이동 0\n\n[column_struct] 구조측 총 0.0m (벽객체 0개 + 외톨이면 0개)\n  일치 100.0% · 이동 0 · 두께변경 0 · 누락 0 · 추가 0 · 면이동 0\n\n[window_opening] 구조측 64개 · 건축측 64개 · 일치 64 · 이동 0 · 폭변경 0 · 누락 0 · 추가 0\n\n총 이슈: 0건\n\n출력: output\\compare_구조_평면도_기준층__건축_평면도_기준층.json\n출력: output\\compare_구조_평면도_기준층__건축_평면도_기준층.html",
    "sources": [
     {
      "label": "구조 기준층 레이어",
@@ -178,7 +214,7 @@
      "href": "output/건축_평면도_기준층_layer.html"
     }
    ],
-   "explain": "구조와 건축 기준층 도면 사이에 요소 정렬 불일치가 반복되므로, 기준축·오리진·회전 및 치수기준 해석 차이가 있었는지 가능성 확인이 필요합니다. 그리드 대비 기둥·전단벽·코어와 건축벽·코어의 상호 위치, 슬래브·발코니 외곽선, 계단·엘리베이터 샤프트와 주요 개구부의 대응 여부를 우선 점검하세요."
+   "explain": ""
   },
   {
    "id": "floors",
@@ -207,18 +243,18 @@
    "raw": [
     "output\\floors_기준층__1층.json"
    ],
-   "log": "$ python compare_floors.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test\\output\\staged\\건축_평면도_기준층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test\\output\\staged\\건축_평면도_1층.json\" \"--labels\" \"기준층\" \"1층\"\n층간 연속성 비교: 기준층 (상층) -> 1층 (하층)\n상층 수직재 300선분 · 하층 수직재 334선분\n정렬 검증: 수직재 1mm 정확일치율 0.0%\n  평행이동 투표 (-84000,0) -> 일치율 94.0%\n하층 기둥 지지대: column_struct 0선분 + 기둥형상 탐지 424선분\n\n[수직 연속성] 상층 수직재 359.6m\n  연속 97.0% · 이동 0 · 전이추정 12 · 단절 4\n  코어[stair] 중심 차이 251mm (이동)\n  코어[elevator] 중심 차이 870mm (이동)\n\n총 이슈: 16건 (전이추정은 정보성)\n  [transferred] 2.46m @ [139567, 922855, 140897, 923055]\n  [transferred] 1.14m @ [109297, 922855, 110437, 922855]\n  [transferred] 1.14m @ [134097, 922855, 135237, 922855]\n  [transferred] 1.14m @ [109297, 923055, 110437, 923055]\n  [transferred] 1.14m @ [134097, 923055, 135237, 923055]\n  [transferred] 1.13m @ [114767, 922855, 115897, 922855]\n  [transferred] 1.13m @ [114767, 923055, 115897, 923055]\n  [discontinued] 0.20m @ [137337, 922855, 137337, 923055]\n  [discontinued] 0.20m @ [136037, 922855, 136037, 923055]\n  [discontinued] 0.20m @ [112537, 922855, 112537, 923055]\n  [discontinued] 0.20m @ [111237, 922855, 111237, 923055]\n  [transferred] 0.20m @ [133037, 922855, 133037, 923055]\n출력: output\\floors_기준층__1층.json\n출력: output\\floors_기준층__1층.png",
+   "log": "$ python compare_floors.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\건축_평면도_기준층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\건축_평면도_1층.json\" \"--labels\" \"기준층\" \"1층\"\n층간 연속성 비교: 기준층 (상층) -> 1층 (하층)\n상층 수직재 300선분 · 하층 수직재 518선분\n정렬 검증: 수직재 1mm 정확일치율 0.0%\n  평행이동 투표 (-84000,0) -> 일치율 94.0%\n하층 기둥 지지대: column_struct 184선분 + 기둥형상 탐지 424선분\n\n[수직 연속성] 상층 수직재 359.6m\n  연속 97.0% · 이동 0 · 전이추정 12 · 단절 4\n  코어[stair] 중심 차이 251mm (이동)\n  코어[elevator] 중심 차이 0mm (OK)\n\n총 이슈: 15건 (전이추정은 정보성)\n  [transferred] 2.46m @ [139567, 922855, 140897, 923055]\n  [transferred] 1.14m @ [109297, 922855, 110437, 922855]\n  [transferred] 1.14m @ [134097, 922855, 135237, 922855]\n  [transferred] 1.14m @ [109297, 923055, 110437, 923055]\n  [transferred] 1.14m @ [134097, 923055, 135237, 923055]\n  [transferred] 1.13m @ [114767, 922855, 115897, 922855]\n  [transferred] 1.13m @ [114767, 923055, 115897, 923055]\n  [discontinued] 0.20m @ [137337, 922855, 137337, 923055]\n  [discontinued] 0.20m @ [136037, 922855, 136037, 923055]\n  [discontinued] 0.20m @ [112537, 922855, 112537, 923055]\n  [discontinued] 0.20m @ [111237, 922855, 111237, 923055]\n  [transferred] 0.20m @ [133037, 922855, 133037, 923055]\n출력: output\\floors_기준층__1층.json\n출력: output\\floors_기준층__1층.png",
    "sources": [],
-   "explain": "기준층→1층에서 일부 수직 요소(벽·기둥·코어)가 연속되지 않는 구간이 있어, 로비/필로티 등 1층 특수 계획에 따른 의도인지 설계 불일치인지 확인이 필요합니다. 외곽 그리드 및 코어·샤프트 위치의 전이 가능성이 있으니, 구조그리드 정합, 코어 관통(계단·엘리베이터)·샤프트 연속성, 피난·설비 수직동선 단절 여부를 우선 검토하세요."
+   "explain": "기준층→1층 연속 커버리지 0.9703으로 전반적 일치하나, 전이 12건·불연속 4건이 있어 코어/샤프트, 주요 실내벽·외피선의 층간 위치 변경 또는 단절 가능성이 있습니다. 불연속 4건 위치에서 계단실·엘리베이터·설비샤프트의 수직 연속성과 방화구획·피난동선 단절 여부를 우선 확인하고, 전이 12건은 1층 로비·상업·필로티 계획에 따른 의도/관행차 여부를 검토해 필요 시 평면·표기 보완을 검토하세요."
   },
   {
    "id": "floors",
    "title": "층간 연속성 [건축] (1층→지하1층)",
    "status": "warn",
-   "summary": "커버리지 0.3796 · 불연속 103",
+   "summary": "커버리지 0.3411 · 불연속 168",
    "badges": [
     {
-     "label": "연속 커버리지 0.3796",
+     "label": "연속 커버리지 0.3411",
      "kind": "info"
     },
     {
@@ -226,7 +262,7 @@
      "kind": "info"
     },
     {
-     "label": "불연속 103",
+     "label": "불연속 168",
      "kind": "warn"
     }
    ],
@@ -238,9 +274,40 @@
    "raw": [
     "output\\floors_1층__지하1층.json"
    ],
-   "log": "$ python compare_floors.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test\\output\\staged\\건축_평면도_1층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test\\output\\staged\\건축_평면도_지하1층.json\" \"--labels\" \"1층\" \"지하1층\"\n층간 연속성 비교: 1층 (상층) -> 지하1층 (하층)\n상층 수직재 334선분 · 하층 수직재 360선분\n정렬 검증: 수직재 1mm 정확일치율 0.0%\n  평행이동 투표 (84000,0) -> 일치율 20.7%\n하층 기둥 지지대: column_struct 80선분 + 기둥형상 탐지 48선분\n\n[수직 연속성] 상층 수직재 390.1m\n  연속 38.0% · 이동 65 · 전이추정 8 · 단절 103\n  코어[stair] 중심 차이 190mm (이동)\n  코어[elevator] 중심 차이 717mm (이동)\n\n총 이슈: 80건 (전이추정은 정보성)\n  [shifted] 18.42m @ [205902, 912050, 208492, 920055] Δ25.0mm\n  [shifted] 13.50m @ [194027, 911760, 195567, 917830] Δ21.3mm\n  [shifted] 13.50m @ [218827, 911760, 220367, 917830] Δ21.3mm\n  [discontinued] 12.51m @ [191737, 920055, 193297, 926255]\n  [discontinued] 11.15m @ [216537, 920055, 217237, 926255]\n  [discontinued] 9.54m @ [182357, 911850, 183692, 920055]\n  [discontinued] 9.00m @ [199897, 922855, 200597, 926255]\n  [discontinued] 9.00m @ [224697, 922855, 225397, 926255]\n  [discontinued] 8.01m @ [232037, 912050, 232037, 920055]\n  [discontinued] 5.55m @ [188192, 917830, 191322, 920255]\n  [shifted] 5.54m @ [228167, 912050, 228902, 914655] Δ16.7mm\n  [shifted] 4.95m @ [186047, 912180, 186227, 914655] Δ0.0mm\n출력: output\\floors_1층__지하1층.json\n출력: output\\floors_1층__지하1층.png",
+   "log": "$ python compare_floors.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\건축_평면도_1층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\건축_평면도_지하1층.json\" \"--labels\" \"1층\" \"지하1층\"\n층간 연속성 비교: 1층 (상층) -> 지하1층 (하층)\n상층 수직재 518선분 · 하층 수직재 356선분\n정렬 검증: 수직재 1mm 정확일치율 0.0%\n  평행이동 투표 (84000,0) -> 일치율 19.4%\n하층 기둥 지지대: column_struct 80선분 + 기둥형상 탐지 48선분\n\n[수직 연속성] 상층 수직재 434.2m\n  연속 34.1% · 이동 64 · 전이추정 8 · 단절 168\n  코어[stair] 중심 차이 198mm (이동)\n  코어[elevator] 중심 차이 168mm (이동)\n\n총 이슈: 81건 (전이추정은 정보성)\n  [shifted] 18.42m @ [205902, 912050, 208492, 920055] Δ25.0mm\n  [discontinued] 17.65m @ [191737, 920055, 193297, 927325]\n  [discontinued] 16.09m @ [216537, 920055, 217237, 927325]\n  [discontinued] 13.94m @ [199897, 922855, 200597, 927325]\n  [discontinued] 13.94m @ [224697, 922855, 225397, 927325]\n  [shifted] 13.50m @ [194027, 911760, 195567, 917830] Δ21.3mm\n  [shifted] 13.50m @ [218827, 911760, 220367, 917830] Δ21.3mm\n  [discontinued] 9.54m @ [182357, 911850, 183692, 920055]\n  [discontinued] 8.01m @ [232037, 912050, 232037, 920055]\n  [discontinued] 7.96m @ [189697, 918030, 190937, 920255]\n  [discontinued] 6.28m @ [215592, 918030, 215737, 920255]\n  [discontinued] 6.08m @ [223817, 918030, 223897, 920055]\n출력: output\\floors_1층__지하1층.json\n출력: output\\floors_1층__지하1층.png",
    "sources": [],
-   "explain": "층간 연속성 지표가 낮아(연속 커버리지 0.3796) 1층↔지하1층 사이에 불연속 103건·전이 8건이 검출되었습니다. 코어(엘리베이터·계단)와 기둥/전단벽, 설비샤프트·개구부의 위치·폭 변경이 의도된 전이계획인지, 램프·슬래브 레벨·두께 변경 등이 관행차 범위인지 우선 확인해 주세요. 특히 주차장(지하)–로비/상가(1층) 접경부와 코어 접속부에서 구조·방화·피난 동선 정합을 도면 상호 비교로 검토 바랍니다."
+   "explain": "층간 연속성 커버리지 0.3411로 낮고, 1층→지하1층 사이 불연속 168건과 전이 8건이 확인되어 축선·개구부 정합성에 문제가 있을 가능성이 큽니다. 1F/B1의 코어벽·기둥·내력벽 축, 엘리베이터/계단 샤프트, 외곽벽 라인 및 슬래브 개구부·주차램프 위치·치수의 층간 전이(8건)가 의도된 설계 관행인지, 아니면 비의도 오프셋/평면 이동인지 확인하세요."
+  },
+  {
+   "id": "floors",
+   "title": "층간 연속성 [구조] (기준층→1층)",
+   "status": "ok",
+   "summary": "커버리지 0.9829 · 불연속 0",
+   "badges": [
+    {
+     "label": "연속 커버리지 0.9829",
+     "kind": "info"
+    },
+    {
+     "label": "전이 8",
+     "kind": "info"
+    },
+    {
+     "label": "불연속 0",
+     "kind": "ok"
+    }
+   ],
+   "images": [],
+   "iframes": [
+    "output\\floors_기준층__1층_view.html"
+   ],
+   "tables": [],
+   "raw": [
+    "output\\floors_기준층__1층.json"
+   ],
+   "log": "$ python compare_floors.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\구조_평면도_기준층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\구조_평면도_1층.json\" \"--labels\" \"기준층\" \"1층\"\n층간 연속성 비교: 기준층 (상층) -> 1층 (하층)\n상층 수직재 300선분 · 하층 수직재 599선분\n정렬 검증: 수직재 1mm 정확일치율 0.0%\n  평행이동 투표 (-168000,0) -> 일치율 95.3%\n하층 기둥 지지대: column_struct 265선분 + 기둥형상 탐지 0선분\n\n[수직 연속성] 상층 수직재 359.6m\n  연속 98.3% · 이동 4 · 전이추정 8 · 단절 0\n  코어[stair] 중심 차이 117mm (이동)\n  코어[elevator] 중심 차이 204mm (이동)\n\n총 이슈: 13건 (전이추정은 정보성)\n  [transferred] 1.33m @ [139567, 922855, 140897, 923055]\n  [shifted] 1.14m @ [109297, 923055, 110437, 923055] Δ50.0mm\n  [shifted] 1.14m @ [134097, 923055, 135237, 923055] Δ50.0mm\n  [transferred] 1.13m @ [114767, 923055, 115897, 923055]\n  [transferred] 0.20m @ [137337, 922855, 137337, 923055]\n  [transferred] 0.20m @ [136037, 922855, 136037, 923055]\n  [transferred] 0.20m @ [112537, 922855, 112537, 923055]\n  [transferred] 0.20m @ [111237, 922855, 111237, 923055]\n  [transferred] 0.20m @ [108237, 922855, 108237, 923055]\n  [shifted] 0.20m @ [133037, 922855, 133037, 923055] Δ50.0mm\n  [shifted] 0.20m @ [116097, 922855, 116097, 923055] Δ-50.0mm\n  [core_shift] 0.00m @ None Δ116.7mm\n출력: output\\floors_기준층__1층.json\n출력: output\\floors_기준층__1층.png",
+   "sources": [],
+   "explain": ""
   },
   {
    "id": "plan_elev",
@@ -273,9 +340,9 @@
    "raw": [
     "output\\plan_elev_배면.json"
    ],
-   "log": "$ python compare_plan_elevation.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test\\output\\staged\\건축_평면도_기준층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test\\drawings\\입면도\\배면.json\" \"--label\" \"배면\"\n평면 창 개구부(수평 벽): 64개\n입면[배면] 기준층 창: 12개 (행 15개에서 합의)\nx 정렬 투표: dx=-86140mm (지지 24표)\n[정보] 균일 편차: position_delta_uniform = 2mm (12/12) — 판정엔 미반영, 검수 참고용\n[정보] 균일 편차: width_delta_uniform = 30mm (12/12) — 판정엔 미반영, 검수 참고용\n\n매칭: 일치 0 · 이동 0 · 폭변경 12 · 평면에 없음 0\n평면측 미대응 개구부 52개 (반대편 입면 소속 가능 — 정보)\n  [resized] x=183312 입면 870 vs 평면 900mm\n  [resized] x=185292 입면 770 vs 평면 800mm\n  [resized] x=187592 입면 1170 vs 평면 1200mm\n  [resized] x=202002 입면 1170 vs 평면 1200mm\n  [resized] x=204302 입면 770 vs 평면 800mm\n  [resized] x=206282 입면 870 vs 평면 900mm\n  [resized] x=208112 입면 870 vs 평면 900mm\n  [resized] x=210092 입면 770 vs 평면 800mm\n  [resized] x=212392 입면 1170 vs 평면 1200mm\n  [resized] x=226802 입면 1170 vs 평면 1200mm\n  [resized] x=229102 입면 770 vs 평면 800mm\n  [resized] x=231082 입면 870 vs 평면 900mm\n출력: output\\plan_elev_배면.json\n출력: output\\plan_elev_배면.png\n출력: output\\plan_elev_배면_overlay.png",
+   "log": "$ python compare_plan_elevation.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\건축_평면도_기준층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\drawings\\입면도\\배면.json\" \"--label\" \"배면\"\n평면 창 개구부(수평 벽): 64개\n입면[배면] 기준층 창: 12개 (행 15개에서 합의)\nx 정렬 투표: dx=-86140mm (지지 24표)\n[정보] 균일 편차: position_delta_uniform = 2mm (12/12) — 판정엔 미반영, 검수 참고용\n[정보] 균일 편차: width_delta_uniform = 30mm (12/12) — 판정엔 미반영, 검수 참고용\n\n매칭: 일치 0 · 이동 0 · 폭변경 12 · 평면에 없음 0\n평면측 미대응 개구부 52개 (반대편 입면 소속 가능 — 정보)\n  [resized] x=183312 입면 870 vs 평면 900mm\n  [resized] x=185292 입면 770 vs 평면 800mm\n  [resized] x=187592 입면 1170 vs 평면 1200mm\n  [resized] x=202002 입면 1170 vs 평면 1200mm\n  [resized] x=204302 입면 770 vs 평면 800mm\n  [resized] x=206282 입면 870 vs 평면 900mm\n  [resized] x=208112 입면 870 vs 평면 900mm\n  [resized] x=210092 입면 770 vs 평면 800mm\n  [resized] x=212392 입면 1170 vs 평면 1200mm\n  [resized] x=226802 입면 1170 vs 평면 1200mm\n  [resized] x=229102 입면 770 vs 평면 800mm\n  [resized] x=231082 입면 870 vs 평면 900mm\n출력: output\\plan_elev_배면.json\n출력: output\\plan_elev_배면.png\n출력: output\\plan_elev_배면_overlay.png",
    "sources": [],
-   "explain": "배면 입면에서 평면 대비 동일 위치 요소들이 위치 이동 없이 폭만 달라진 패턴입니다. 배면 창호·개구부·발코니의 폭 치수 기준(내경 vs 외경/프레임 포함) 차이, 마감·단열·측벽 두께 반영 또는 창호 분할 변경 등이 원인일 수 있으니 설계·표기 관행 차 여부를 우선 확인하세요."
+   "explain": "기준층 평면 대비 배면 입면에서 매칭 0건(일치율 0%), 이동 0건, 폭변경 12건(평면에없음 0건)으로, 위치는 맞지만 폭이 모두 다르게 표현된 상태입니다. 배면 입면의 창호/발코니/개구부 폭 산출 기준이 평면과 다른 관행(구조체 내경 vs 프레임 외경, 마감·단열 두께 포함 여부 등)인지 확인하고, 축선/중심선 기준은 동일한지 및 배면 모듈 타입·치수기입 오류 가능성을 우선 검토하십시오."
   },
   {
    "id": "plan_elev",
@@ -327,9 +394,9 @@
    "raw": [
     "output\\plan_elev_정면.json"
    ],
-   "log": "$ python compare_plan_elevation.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test\\output\\staged\\건축_평면도_기준층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test\\drawings\\입면도\\정면.json\" \"--label\" \"정면\"\n평면 창 개구부(수평 벽): 64개\n입면[정면] 기준층 창: 16개 (행 17개에서 합의)\nx 정렬 투표: dx=39860mm (지지 32표)\n[정보] 균일 편차: position_delta_uniform = 2mm (16/16) — 판정엔 미반영, 검수 참고용\n[정보] 균일 편차: width_delta_uniform = 30mm (16/16) — 판정엔 미반영, 검수 참고용\n\n매칭: 일치 0 · 이동 0 · 폭변경 16 · 평면에 없음 0\n평면측 미대응 개구부 48개 (반대편 입면 소속 가능 — 정보)\n  [resized] x=184592 입면 1770 vs 평면 1800mm\n  [resized] x=188037 입면 2670 vs 평면 2700mm\n  [resized] x=190857 입면 1170 vs 평면 1200mm\n  [resized] x=193277 입면 1470 vs 평면 1500mm\n  [resized] x=196317 입면 1470 vs 평면 1500mm\n  [resized] x=198737 입면 1170 vs 평면 1200mm\n  [resized] x=201557 입면 2670 vs 평면 2700mm\n  [resized] x=205002 입면 1770 vs 평면 1800mm\n  [resized] x=209392 입면 1770 vs 평면 1800mm\n  [resized] x=212837 입면 2670 vs 평면 2700mm\n  [resized] x=215657 입면 1170 vs 평면 1200mm\n  [resized] x=218077 입면 1470 vs 평면 1500mm\n  [resized] x=221117 입면 1470 vs 평면 1500mm\n  [resized] x=223537 입면 1170 vs 평면 1200mm\n  [resized] x=226357 입면 2670 vs 평면 2700mm\n  [resized] x=229802 입면 1770 vs 평면 1800mm\n출력: output\\plan_elev_정면.json\n출력: output\\plan_elev_정면.png\n출력: output\\plan_elev_정면_overlay.png",
+   "log": "$ python compare_plan_elevation.py \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\output\\staged\\건축_평면도_기준층.json\" \"D:\\Python_test\\fran_consist_cad_json\\projects\\test_v4\\drawings\\입면도\\정면.json\" \"--label\" \"정면\"\n평면 창 개구부(수평 벽): 64개\n입면[정면] 기준층 창: 16개 (행 17개에서 합의)\nx 정렬 투표: dx=39860mm (지지 32표)\n[정보] 균일 편차: position_delta_uniform = 2mm (16/16) — 판정엔 미반영, 검수 참고용\n[정보] 균일 편차: width_delta_uniform = 30mm (16/16) — 판정엔 미반영, 검수 참고용\n\n매칭: 일치 0 · 이동 0 · 폭변경 16 · 평면에 없음 0\n평면측 미대응 개구부 48개 (반대편 입면 소속 가능 — 정보)\n  [resized] x=184592 입면 1770 vs 평면 1800mm\n  [resized] x=188037 입면 2670 vs 평면 2700mm\n  [resized] x=190857 입면 1170 vs 평면 1200mm\n  [resized] x=193277 입면 1470 vs 평면 1500mm\n  [resized] x=196317 입면 1470 vs 평면 1500mm\n  [resized] x=198737 입면 1170 vs 평면 1200mm\n  [resized] x=201557 입면 2670 vs 평면 2700mm\n  [resized] x=205002 입면 1770 vs 평면 1800mm\n  [resized] x=209392 입면 1770 vs 평면 1800mm\n  [resized] x=212837 입면 2670 vs 평면 2700mm\n  [resized] x=215657 입면 1170 vs 평면 1200mm\n  [resized] x=218077 입면 1470 vs 평면 1500mm\n  [resized] x=221117 입면 1470 vs 평면 1500mm\n  [resized] x=223537 입면 1170 vs 평면 1200mm\n  [resized] x=226357 입면 2670 vs 평면 2700mm\n  [resized] x=229802 입면 1770 vs 평면 1800mm\n출력: output\\plan_elev_정면.json\n출력: output\\plan_elev_정면.png\n출력: output\\plan_elev_정면_overlay.png",
    "sources": [],
-   "explain": "평면과 정면에서 대응 요소가 전부 맞지 않고 폭만 일괄적으로 다르게 산정된 패턴이므로, 치수 기준(구조선 기준 vs 마감/창호 프레임 외경) 차이 가능성을 먼저 의심해 보세요. 기준층 평면과 정면이 동일 세대·확장 상태로 매칭됐는지, 정면 창호/발코니 모듈이 그리드와 같은 기준선을 쓰는지 및 외장두께·프레임 포함 여부 등 관행 차를 확인하십시오."
+   "explain": "정면 입면의 분할/개구는 평면 기준층과 중심선은 같지만(이동 0) 폭만 상이한 항목이 16건으로, 정확히 일치하는 항목이 없어 일치율 0%(매칭 0, 평면에없음 0) 상태입니다. 창호·발코니·외벽 모듈의 폭 산정 기준(프레임 포함여부, 유효폭 vs 체배폭)과 평면-입면의 기준선 차이(구조선/마감선) 및 정면 타입의 모듈 규격·그리드 치수를 대조해 관행차/설계의도 반영 여부를 확인하십시오."
   },
   {
    "id": "plan_elev",
@@ -354,10 +421,10 @@
    "id": "dim_check",
    "title": "치수 자기검증 (전 도면)",
    "status": "warn",
-   "summary": "6개 도면 치수 검증 · 실측 불일치 총 6건",
+   "summary": "7개 도면 치수 검증 · 실측 불일치 총 6건",
    "badges": [
     {
-     "label": "검증 도면 6개",
+     "label": "검증 도면 7개",
      "kind": "info"
     },
     {
@@ -371,7 +438,7 @@
    "raw": [],
    "log": "",
    "sources": [],
-   "explain": "치수 자기검증에서 검증 도면 6개 전부에서 실측-표기 불일치 총 6건이 확인되어(도면당 평균 1건), 치수 기준 설정 또는 표기 관행 차이 가능성 검토가 필요합니다. 각 도면의 기준선/기점(내주·외주·마감선 기준), 단위 반올림·허용오차 적용(±5mm 등 관행 차 여부), 누적치수 합계 대비 총장 모순 및 동일 구간 중복치수 충돌 여부를 우선 확인하십시오.",
+   "explain": "전 도면 치수 자기검증에서 표기치와 실측 불일치가 6건 확인됨(검증 도면 7개, 도면당 평균 0.86건)으로, 치수 기준선/기점 설정이나 축척·단위·반올림 관행 차에 따른 편차 가능성 확인이 필요합니다. 불일치 표시 구간에서 연속치수 vs 개별치수 합산 일치 여부, 그리드-벽체/벽체-개구부 치수선의 스냅·기점 겹침, 변경된 벽·개구부 폭 반영 누락 여부를 각각 재측정해 점검하십시오.",
    "subreports": [
     {
      "label": "건축 평면도 1층",
@@ -392,6 +459,14 @@
     {
      "label": "건축 평면도 지하1층",
      "n_dims": 59,
+     "n_override": 0,
+     "n_mismatch": 0,
+     "table": null,
+     "iframe": null
+    },
+    {
+     "label": "구조 평면도 1층",
+     "n_dims": 66,
      "n_override": 0,
      "n_mismatch": 0,
      "table": null,
