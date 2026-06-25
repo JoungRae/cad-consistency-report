@@ -36,7 +36,7 @@
 <body>
   <header class="site-head">
     <h1>🏢 도면 정합성 비교 리포트 <span style="color:#5b5bf0">(데모)</span></h1>
-    <p>CAD 도면(JSON) 좌표를 분류·대조해 <b>구조↔건축 · 단면↔평면 · 층간 연속성 · 평면↔입면 · 치수 자기검증</b>을
+    <p>CAD 도면(JSON) 좌표를 분류·대조해 <b>구조↔건축 · 층간 연속성 · 치수 자기검증 · 부대시설 배치/정합 · 부대시설↔PIT 대조</b>를
        자동 검토한 결과입니다. 각 카드는 요약 배지 + 좌표 인터랙티브 뷰(휠 확대·드래그 이동) + 상세표로 구성됩니다.
        <br>※ 미리 생성된 리포트(읽기 전용)이며, 원본 도면 데이터는 포함되어 있지 않습니다.</p>
   </header>
@@ -74,11 +74,13 @@
 
     // 정합성 카테고리 표시 순서·이름 (card.id 기준)
     const CATS = [
-      ["section_plan", "단면↔평면"],
       ["struct_arch", "구조↔건축"],
       ["floors", "층간 연속성"],
-      ["plan_elev", "평면↔입면"],
       ["dim_check", "치수 자기검증"],
+      ["facility_place", "부대시설 배치·정합"],
+      ["facility_pit", "부대시설 ↔ PIT 대조"],
+      ["section_plan", "단면↔평면"],
+      ["plan_elev", "평면↔입면"],
     ];
 
     function renderNav(ordered) {   // 카테고리별 점프 칩
